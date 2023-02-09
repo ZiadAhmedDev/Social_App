@@ -39,7 +39,12 @@ void printFullText(String? text) {
 }
 
 String? token = '';
+String? verificationId;
 String? uId = '';
+String? emailControllerOtp;
+String? passwordControllerOtp;
+String? nameControllerOtp;
+String? phoneControllerOtp;
 
 const kPrimaryColor = Color(0xff2B475E);
 

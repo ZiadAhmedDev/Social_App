@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/layout/social_layout/cubit/social_cubit.dart';
-import 'package:news_app/layout/social_layout/social_layout.dart';
-import 'package:news_app/modules/social%20app/login/cubit/social_login_cubit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../../layout/social_layout/cubit/social_cubit.dart';
+import '../../../layout/social_layout/social_layout.dart';
 import '../../../shared/components/components.dart';
 import '../../../shared/components/constants.dart';
 import '../../../shared/network/local/cache_helper.dart';
 import '../Register/register_layout.dart';
+import 'cubit/social_login_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -74,7 +75,7 @@ class LoginScreen extends StatelessWidget {
                               }
                               return null;
                             },
-                            label: 'Email Address',
+                            label: 'Email Address/Phone',
                             prefix: Icons.email_outlined),
                         const SizedBox(
                           height: 25,
@@ -120,6 +121,44 @@ class LoginScreen extends StatelessWidget {
                               text: 'Login'),
                           fallback: (context) => const Center(
                             child: CircularProgressIndicator(),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Divider(
+                            thickness: 2,
+                            color: Colors.grey[400],
+                            endIndent: 1,
+                            indent: 1,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Expanded(
+                              child: ElevatedButton.icon(
+                                  style: ElevatedButton.styleFrom(
+                                    foregroundColor: Colors.white,
+                                    backgroundColor: Colors.black,
+                                  ),
+                                  onPressed: () {
+                                    // SocialLoginCubit.get(context)
+                                    //     .signInGoogle();
+                                  },
+                                  icon: const Icon(
+                                    FontAwesomeIcons.google,
+                                    color: Colors.orange,
+                                  ),
+                                  label: const Text(
+                                    'Sign in With Google account',
+                                  )),
+                            ),
                           ),
                         ),
                         Row(

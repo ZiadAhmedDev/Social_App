@@ -2,6 +2,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_app/layout/social_layout/social_layout.dart';
+import 'package:news_app/modules/social%20app/Register/phone_auth/otp_screen.dart';
 
 import '../../../layout/social_layout/cubit/social_cubit.dart';
 import '../../../shared/components/components.dart';
@@ -129,12 +130,19 @@ class RegisterScreen extends StatelessWidget {
                             type: TextInputType.visiblePassword,
                             onSubmit: (value) {
                               if (formKey.currentState!.validate()) {
-                                SocialRegisterCubit.get(context).userRegister(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  name: nameController.text,
-                                  phone: phoneController.text,
-                                );
+                                SocialRegisterCubit.get(context)
+                                    .verifyPhoneNumber(
+                                        context, phoneController.text
+                                        // email: emailController.text,
+                                        // password: passwordController.text,
+                                        // name: nameController.text,
+                                        // phone: phoneController.text,
+                                        );
+                                emailControllerOtp = emailController.text;
+                                phoneControllerOtp = phoneController.text;
+                                passwordControllerOtp = passwordController.text;
+                                nameControllerOtp = nameController.text;
+                                navigateTo(context, OTPPage());
                               }
                             },
                             isPassword:
@@ -160,12 +168,21 @@ class RegisterScreen extends StatelessWidget {
                           builder: (context) => defaultButton(
                               function: () {
                                 if (formKey.currentState!.validate()) {
-                                  SocialRegisterCubit.get(context).userRegister(
-                                    email: emailController.text,
-                                    password: passwordController.text,
-                                    name: nameController.text,
-                                    phone: phoneController.text,
-                                  );
+                                  SocialRegisterCubit.get(context)
+                                      .verifyPhoneNumber(
+                                          context, phoneController.text
+                                          // email: emailController.text,
+
+                                          // password: passwordController.text,
+                                          // name: nameController.text,
+                                          // phone: phoneController.text,
+                                          );
+                                  emailControllerOtp = emailController.text;
+                                  phoneControllerOtp = phoneController.text;
+                                  passwordControllerOtp =
+                                      passwordController.text;
+                                  nameControllerOtp = nameController.text;
+                                  navigateTo(context, OTPPage());
                                 }
                               },
                               text: 'register'),

@@ -2,13 +2,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_app/layout/social_layout/cubit/social_cubit.dart';
-import 'package:news_app/layout/social_layout/social_layout.dart';
 import 'package:news_app/shared/bloc_observer.dart';
 import 'package:news_app/shared/components/constants.dart';
 import 'package:news_app/shared/network/local/cache_helper.dart';
 import 'package:news_app/shared/network/remote/dio_helper.dart';
 import 'package:news_app/shared/styles/themes.dart';
+import 'layout/social_layout/cubit/social_cubit.dart';
+import 'layout/social_layout/social_layout.dart';
+import 'modules/social app/Register/cubit/social_register_cubit.dart';
+import 'modules/social app/Register/phone_auth/otp_screen.dart';
+import 'modules/social app/login/cubit/social_login_cubit.dart';
 import 'modules/social app/login/login_screen.dart';
 
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -56,8 +59,18 @@ class SocialApp extends StatelessWidget {
   const SocialApp({super.key, required this.isDark, required this.startWidget});
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SocialCubit()..getNewPosts(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SocialCubit()..getNewPosts(),
+        ),
+        BlocProvider(
+          create: (context) => SocialRegisterCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SocialLoginCubit(),
+        ),
+      ],
       child: BlocBuilder<SocialCubit, SocialState>(
         builder: (context, state) {
           return MaterialApp(

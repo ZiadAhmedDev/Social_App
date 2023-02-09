@@ -190,7 +190,7 @@ class SocialCubit extends Cubit<SocialState> {
       cover: coverImageUrl!.isEmpty || coverImageUrl == null
           ? socialModel!.cover
           : coverImageUrl,
-      isEmailVerified: socialModel!.isEmailVerified ?? false,
+      // isEmailVerified: socialModel!.isEmailVerified ?? false,
     );
     FirebaseFirestore.instance
         .collection(userCollection)

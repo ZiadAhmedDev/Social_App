@@ -6,15 +6,17 @@ class SocialUserModel {
   String? bio;
   String? image;
   String? cover;
-  bool? isEmailVerified;
+  String? password;
+  // bool? isEmailVerified;
 
   SocialUserModel(
       {this.name,
       this.email,
       this.phone,
       this.uId,
-      this.isEmailVerified,
+      // this.isEmailVerified,
       this.bio,
+      this.password,
       this.cover,
       this.image});
 
@@ -23,10 +25,11 @@ class SocialUserModel {
     phone = json['phone'];
     email = json['email'];
     uId = json['uId'];
+    password = json['password'];
     bio = json['bio'];
     cover = json['cover'];
     image = json['image'];
-    isEmailVerified = json['isEmailVerified'];
+    // isEmailVerified = json['isEmailVerified'];
   }
 
   Map<String, dynamic> toMap() {
@@ -35,7 +38,8 @@ class SocialUserModel {
       'phone': phone,
       'email': email,
       'uId': uId,
-      'isEmailVerified': isEmailVerified,
+      'password': password,
+      // 'isEmailVerified': isEmailVerified,
       'bio': bio,
       'cover': cover,
       'image': image,
