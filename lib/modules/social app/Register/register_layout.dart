@@ -142,7 +142,11 @@ class RegisterScreen extends StatelessWidget {
                                 phoneControllerOtp = phoneController.text;
                                 passwordControllerOtp = passwordController.text;
                                 nameControllerOtp = nameController.text;
-                                navigateTo(context, OTPPage());
+                                navigateTo(
+                                    context,
+                                    OTPPage(
+                                      phoneNumber: phoneController.text,
+                                    ));
                               }
                             },
                             isPassword:
@@ -172,7 +176,6 @@ class RegisterScreen extends StatelessWidget {
                                       .verifyPhoneNumber(
                                           context, phoneController.text
                                           // email: emailController.text,
-
                                           // password: passwordController.text,
                                           // name: nameController.text,
                                           // phone: phoneController.text,
@@ -182,7 +185,11 @@ class RegisterScreen extends StatelessWidget {
                                   passwordControllerOtp =
                                       passwordController.text;
                                   nameControllerOtp = nameController.text;
-                                  navigateTo(context, OTPPage());
+                                  navigateTo(
+                                      context,
+                                      OTPPage(
+                                        phoneNumber: phoneController.text,
+                                      ));
                                 }
                               },
                               text: 'register'),
