@@ -4,10 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:news_app/shared/network/local/cache_helper.dart';
 
 import '../../../../models/social_create_user.dart';
 import '../../../../shared/components/components.dart';
 import '../../../../shared/components/constants.dart';
+import '../../login/login_screen.dart';
 import 'social_register_state.dart';
 
 class SocialRegisterCubit extends Cubit<SocialRegisterState> {
@@ -91,8 +94,8 @@ class SocialRegisterCubit extends Cubit<SocialRegisterState> {
     required String email,
     required String name,
     required String uId,
-    required String phone,
-    required String password,
+    String? password,
+    String? phone,
     String? bio,
     String? image,
     String? cover,
@@ -102,11 +105,11 @@ class SocialRegisterCubit extends Cubit<SocialRegisterState> {
     var modelUser = SocialUserModel(
       email: email,
       name: name,
-      password: password,
-      phone: phone,
+      password: password ?? '',
+      phone: phone ?? '',
       uId: uId,
       bio: 'Write bio here.....',
-      image:
+      image: image ??
           'https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg?w=826&t=st=1674657751~exp=1674658351~hmac=2dd02bc2588474b028451a4fb84192c789d286bbc8af955a7091cb2d65ce3d4d',
       cover:
           'https://img.freepik.com/free-vector/designer-collection-concept_23-2148508641.jpg?w=1380&t=st=1674657679~exp=1674658279~hmac=52a6850b6e005a42118bfe146b77783461a29015dcb4c92f54eebd4974af02a7',
@@ -131,6 +134,84 @@ class SocialRegisterCubit extends Cubit<SocialRegisterState> {
     iconSuffix =
         isPassword ? Icons.visibility_outlined : Icons.visibility_off_outlined;
     emit(ChangePasswordVisibility());
+  }
+
+  final googleSignIn = GoogleSignIn();
+  GoogleSignInAccount? user;
+  User? userData;
+  Future signInGoogle(
+      // {required String email,
+      // required String name,
+      // required String phone,
+      // required String image}
+      ) async {
+    try {
+      final googleUser = await googleSignIn.signIn();
+      print(
+          'googleUser=googleUser=googleUser=googleUser=googleUser=googleUser=googleUser=googleUser=googleUser=');
+      print(googleUser.toString());
+      print(
+          'googleUser=googleUser=googleUser=googleUser=googleUser=googleUser=googleUser=googleUser=');
+      user = googleUser;
+      final googleAuth = await googleUser!.authentication;
+      final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      UserCredential? userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      userData = userCredential.user;
+      if (userData != null) {
+        // if (userCredential.additionalUserInfo!.isNewUser) {
+        // add to firestore
+        await createUser(
+          uId: userData!.email!,
+          email: userData!.email!,
+          name: userData!.displayName!,
+          phone: userData!.phoneNumber,
+          image: userData!.photoURL!,
+        );
+        await CacheHelper.saveData(key: 'uId', value: userData!.email);
+        print(
+            'userData!.photoURL.toString()userData!.photoURL.toString()userData!.photoURL.toString()userData!.photoURL.toString()userData!.photoURL.toString()userData!.photoURL.toString()');
+        print(userData!.photoURL.toString());
+        print(
+            'userData!.photoURL.toString()userData!.photoURL.toString()userData!.photoURL.toString()userData!.photoURL.toString()userData!.photoURL.toString()userData!.photoURL.toString()');
+        // }
+      }
+      // if (user != null) {
+      //   await createUser(
+      //     email: email,
+      //     name: name,
+      //     phone: phone,
+      //     image: image,
+      //     uId: phone,
+      //   );
+      // }
+      print(
+          'user=user=user=user=user=user=user=user=user=user=user=user=user=user=user=');
+      print(user.toString());
+      print(
+          'user=user=user=user=user=user=user=user=user=user=user=user=user=user=user=');
+      emit(SignInGoogleSuccess(userData!.email));
+    } catch (e) {
+      print(
+          'Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=rError=Error=Error=');
+      print(e.toString());
+      emit(SignInGoogleError(e.toString()));
+      print(
+          'Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=Error=');
+    }
+  }
+
+  Future signOutGoogle(context) async {
+    await googleSignIn.signOut();
+    await FirebaseAuth.instance.signOut();
+    CacheHelper.sharedPreferences?.remove('uId').then((value) {
+      if (value) {
+        uId = '';
+        return navigateAndReplacement(context, LoginScreen());
+      }
+    });
+    // emit(SignOutGoogleSuccess());
   }
 
   String? phoneNumber;

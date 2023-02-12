@@ -26,6 +26,20 @@ class SocialCreateUserError extends SocialRegisterState {
 
 class ChangePasswordVisibility extends SocialRegisterState {}
 
+class SignInGoogleSuccess extends SocialRegisterState {
+  final String? uId;
+
+  SignInGoogleSuccess(this.uId);
+}
+
+class SignInGoogleError extends SocialRegisterState {
+  final String error;
+
+  SignInGoogleError(this.error);
+}
+
+class SignOutGoogleSuccess extends SocialRegisterState {}
+
 class OtpPhoneVerificationCompletedSuccess extends SocialRegisterState {}
 
 class OtpPhoneVerificationCompletedError extends SocialRegisterState {}

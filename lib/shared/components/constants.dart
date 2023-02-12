@@ -6,6 +6,8 @@
 
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:news_app/main.dart';
 
 import '../../modules/social app/login/login_screen.dart';
@@ -24,7 +26,9 @@ import 'components.dart';
 //   });
 // }
 
-void signOut(context) {
+Future<void> signOut(context) async {
+  await GoogleSignIn().signOut();
+  await FirebaseAuth.instance.signOut();
   CacheHelper.sharedPreferences?.remove('uId').then((value) {
     if (value) {
       uId = '';

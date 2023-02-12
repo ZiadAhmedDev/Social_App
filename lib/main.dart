@@ -14,7 +14,6 @@ import 'modules/social app/Register/phone_auth/otp_screen.dart';
 import 'modules/social app/login/cubit/social_login_cubit.dart';
 import 'modules/social app/login/login_screen.dart';
 
-
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print("Handling a background message: ${message.messageId}");
 }
@@ -30,7 +29,11 @@ void main() async {
   uId = CacheHelper.getData(key: 'uId');
   var token = await FirebaseMessaging.instance.getToken();
   print(token.toString());
+  print(
+      'uId.toString()uId.toString()uId.toString()uId.toString()uId.toString()uId.toString()uId.toString()');
   print(uId.toString());
+  print(
+      'uId.toString()uId.toString()uId.toString()uId.toString()uId.toString()uId.toString()uId.toString()');
 
   await FirebaseMessaging.instance.subscribeToTopic('allDevices');
 
@@ -64,9 +67,6 @@ class SocialApp extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => SocialCubit()..getNewPosts(),
-        ),
-        BlocProvider(
-          create: (context) => SocialRegisterCubit(),
         ),
         BlocProvider(
           create: (context) => SocialLoginCubit(),

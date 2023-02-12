@@ -26,22 +26,39 @@ class SocialCubit extends Cubit<SocialState> {
 
   Future<void> getUserData() async {
     emit(SocialLoadingGetUserData());
+    // print('uId=uId=uId=uId=uId=uId=uId=uId=uId=uId=uId=uId=');
+    // print(uId.toString());
+    // print('uId=uId=uId=uId=uId=uId=uId=uId=uId=uId=uId=uId=');
     if (uId != null) {
       DocumentSnapshot<Map<String, dynamic>> res = await FirebaseFirestore
-          .instance
-          .collection(userCollection)
-          .doc(uId)
-          .get()
-          .catchError((error) {
-        printFullText(error.toString());
-        emit(SocialErrorGetUserData(error.toString()));
-      });
+              .instance
+              .collection(userCollection)
+              .doc(uId)
+              .get()
+          //     .catchError((error) {
+          //   printFullText(error.toString());
+          //   emit(SocialErrorGetUserData(error.toString()));
+          // })
+          ;
+      print(
+          'res.data().toString()res.data().toString()res.data().toString()res.data().toString()res.data().toString()');
+      print(uId.toString());
+      print(
+          'res.data().toString()res.data().toString()res.data().toString()res.data().toString()res.data().toString()');
+      print(
+          'res.data().toString()res.data().toString()res.data().toString()res.data().toString()res.data().toString()');
+      print(res.data().toString());
+      print(
+          'res.data().toString()res.data().toString()res.data().toString()res.data().toString()res.data().toString()');
       socialModel = SocialUserModel.fromJson(res.data()!);
-      printFullText('-------------------------------');
+      printFullText(
+          'socialModel!.email=socialModel!.email=socialModel!.email=socialModel!.email=socialModel!.email=socialModel!.email=');
       printFullText(socialModel!.email.toString());
-      printFullText('-------------------------------');
+      printFullText(
+          'socialModel!.email=socialModel!.email=socialModel!.email=socialModel!.email=socialModel!.email=socialModel!.email=');
+      printFullText('res.id=res.id=res.id=res.id=res.id=res.id=res.id=');
       printFullText(res.id.toString());
-      printFullText('-------------------------------');
+      printFullText('res.id=res.id=res.id=res.id=res.id=res.id=res.id=');
       emit(SocialSuccessGetUserData());
     }
   }

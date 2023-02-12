@@ -20,5 +20,3 @@ class SocialLoginError extends SocialLoginState {
 }
 
 class ChangePasswordVisibility extends SocialLoginState {}
-
-class SignInGoogleSuccess extends SocialLoginState {}
