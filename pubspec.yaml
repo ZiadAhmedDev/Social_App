@@ -51,7 +51,7 @@ dependencies:
   image_picker: ^0.8.6+1
   firebase_messaging: ^14.2.1
   font_awesome_flutter: ^10.3.0
-  # google_sign_in: ^5.4.4
+  google_sign_in: ^5.4.4
   pin_code_fields: ^7.4.0
 
 dev_dependencies:
